@@ -1,0 +1,138 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: 'PixelFont';
+  src: url('https://fonts.gstatic.com/s/pressstart2p/v14/e3t4euO8T-267oIAQAu6jDQyK3nVivNm4I81.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+body {
+  background-color: #000;
+  color: #FFD700;
+  font-family: 'Press Start 2P', 'PixelFont', monospace;
+  overflow-x: hidden;
+}
+
+.font-pixel {
+  font-family: 'Press Start 2P', 'PixelFont', monospace;
+}
+
+.retro-camera {
+  @apply shadow-2xl;
+  image-rendering: pixelated;
+}
+
+.camera-frame {
+  position: relative;
+  border-top: 4px solid #FFD700;
+  border-bottom: 4px solid #FFD700;
+}
+
+.camera-frame::before,
+.camera-frame::after,
+.viewfinder::before,
+.viewfinder::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 8px;
+  background-image: repeating-linear-gradient(
+    to bottom,
+    #FFD700 0px,
+    #FFD700 8px,
+    transparent 8px,
+    transparent 16px
+  );
+  opacity: 0.8;
+}
+
+.camera-frame::before,
+.viewfinder::before {
+  right: -4px;
+  transform: scaleX(0.5);
+}
+
+.camera-frame::after,
+.viewfinder::after {
+  left: -4px;
+  transform: scaleX(0.5);
+}
+
+.viewfinder {
+  position: relative;
+  border-top: 4px solid #FFD700;
+  border-bottom: 4px solid #FFD700;
+}
+
+.scanlines {
+  background: repeating-linear-gradient(
+    to bottom,
+    transparent 0px,
+    rgba(0, 0, 0, 0.1) 1px,
+    transparent 2px,
+    transparent 4px
+  );
+  z-index: 10;
+}
+
+.pixelate {
+  background-image: radial-gradient(
+    rgba(0, 0, 0, 0.1) 20%, 
+    transparent 20%
+  );
+  background-size: 4px 4px;
+  z-index: 9;
+}
+
+.viewfinder::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 215, 0, 0.1),
+    rgba(255, 215, 0, 0.05)
+  );
+  pointer-events: none;
+  z-index: 8;
+}
+
+button {
+  transition: all 0.1s ease-out;
+}
+
+button:active {
+  transform: scale(0.95);
+}
+
+/* Disable webcam mirroring */
+video {
+  transform: scaleX(1);
+}
+
+@keyframes flicker {
+  0% { opacity: 1.0; }
+  4% { opacity: 0.9; }
+  6% { opacity: 0.95; }
+  10% { opacity: 0.9; }
+  20% { opacity: 1.0; }
+  40% { opacity: 0.95; }
+  42% { opacity: 1.0; }
+  60% { opacity: 0.98; }
+  80% { opacity: 1.0; }
+  97% { opacity: 0.9; }
+  100% { opacity: 1.0; }
+}
+
+.viewfinder {
+  animation: flicker 6s infinite;
+  box-shadow: inset 0 0 20px rgba(255, 215, 0, 0.2);
+}
